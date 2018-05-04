@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TecBiz Lojista</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/themes/tecbiz_lojista_mobile.css" />
+  <link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+  <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" /> 
+  <link rel="stylesheet" href="css/css.css"/>  
+ 
+  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/jquery.mobile-1.4.5.min.js"></script> 
+  <script src="js/jquery.storageapi.min.js"></script> 
+  <script src="js/jquery.storageapi.js"></script> 
+</head>
+    <body>
+        <div data-role="page" data-theme="a">
+            <script type="text/javascript" src="js/cabecalho.js"></script>
+            <div data-role="content" data-theme="a">
+                <center>
+                    <div data-role="fieldcontain">
+                        <center>
+                            <label>
+                                Código
+                            </label>
+                        </center>
+                        <input maxlength="4" type="number" name="codecs" id="codecs" data-mask="0000" style="text-align: center" required="on" />
+                        <center>
+                            <label>
+                                Senha
+                            </label>
+                        </center>
+                        <input type="number" name="senecs" id="senecs" style="text-align: center" data-mask="000000"/>
+                </center>
+                <button class="show-page-loading-msg" data-textonly="false" data-textvisible="true" data-msgtext="Aguarde..." id="bentrar" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;" onclick="controlBackButton();">
+                    Entrar
+                </button>
+                <center/>
+                <input type="checkbox" name="checkLogin" id="checkLogin" class="custom" />
+                <label for="checkLogin">Salvar dados</label>
+                </center>
+            </div>
+             <script type="text/javascript" src="js/rodape.js"></script>
+        </div>
+
+        <div data-role="page" data-theme="a" id="menupage">
+            <script type="text/javascript" src="js/cabecalho.js"></script>
+            <div data-role="fieldcontain">
+                <label style="color: #00a99d; font-weight: bold; width: 100%; margin-left: 5px;">
+                    ESCOLHA UMA OPÇÃO: 
+                </label>
+                <br /><br />
+                <div align="center">
+                    <ul id="menu" data-role="listview" data-inset="true" >
+                        <li>
+                                <a href="#cartaopage" style="font-size: 100%;color: #00a99d;" data-transition="pop">
+                                    Autorização Normal
+                                </a>
+                        </li>
+                        <li>
+                            <a href="#vencpage" style="font-size: 100%;color: #00a99d;" data-transition="pop" id="vf">
+                                Autorização Futura
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#conspage" style="font-size: 100%;color: #00a99d;" data-transition="pop" onclick="conta();">
+                                Consulta / Estorno
+                            </a>
+                        </li>
+                        <li data-icon="back" style="background-color: #CD5C5C;">
+                            <a href="#" style="font-size: 100%;color: #CD5C5C;" onclick="sair();">
+                                Sair
+                            </a>
+                        </li>
+                    </ul>
+                    <label style="font-size: 10pt; margin-top: 5px; font-weight: bold;" >
+                            Este autorizador não descarta a utilização do bloco de comprovante!
+                    </label>
+                </div>
+            </div>
+            <script type="text/javascript" src="js/rodape.js"></script>
+        </div>
+
+        <div data-role="page" data-theme="a" id="conspage" >
+            <div data-role="header" data-position="inline">
+                <h1 style="font-size: 80%;">Consulta Autorização</h1>
+            </div>
+                <div class="ui-field-contain" style='margin: 20px; position: relative'>
+                    <label style="color: #00a99d; font-weight: bold; width: 100%;">
+                        Digite o número da autorização. 
+                    </label>
+                     <center>
+                        <input type="tel" name="aut" id="aut" maxlength="19" value="" style="text-align: center;">
+                            <br/>
+                            Deixe em branco para consultar a última autorização!
+                            <button id="bavancar_cons" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;">
+                            Avançar
+                        </button>
+                        <br/>
+                        <button id="blimpar_cons" style="font-size: 100%;">Limpar</button>
+                    </center>
+            </div>
+                <div data-role="footer" data-position="fixed">
+                        <center><button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
+                </div>
+            </div>
+
+
+    <div data-role="page" data-theme="a" id="vencpage" >
+        <div data-role="header" data-position="inline">
+                <h1 style="font-size: 80%;">Autorização</h1>
+        </div>
+         
+            <div class="ui-field-contain" style='margin: 20px; position: relative'>
+            <label style="color: #00a99d;"><b>MÊS DE VENCIMENTO: </b></label>         
+             <center>
+                <select name="mes" id="mes" data-icon="calendar" data-native-menu="false">
+                    <option value="0">-- Selecione o mês --</option>
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+                   <br/>      
+                <button id="bavancar_venc" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;">Avançar</button><br/>
+            </center>
+    </div>
+        <div data-role="footer" data-position="fixed">
+                <center><button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
+        </div>
+    </div>
+
+    <div data-role="page" data-theme="a" id="cartaopage" >
+        <div data-role="header" data-position="inline">
+           <h1 style="font-size: 80%;">
+                Autorização
+            </h1>
+        </div>
+        <div class="ui-field-contain" style='margin: 20px; position: relative'>
+            <label style="color: #00a99d; font-weight: bold; width: 100%;">
+                Digite o número do cartão: 
+            </label>
+            <center>
+                <input type="tel" name="cartao" id="cartao" maxlength="19" value="6298.69" data-mask="0000 0000 0000 0000" style="text-align: center;"><br/>
+                <button id="bavancar_cartao" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;">
+                    Avançar
+                </button>
+                <br/>
+                <button id="blimpar_cartao" style="font-size: 100%;">
+                    Limpar
+                </button>
+            </center>
+    </div>
+        <div data-role="footer" data-position="fixed">
+            <center>
+                <button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu">
+                    &nbsp;&nbsp;Menu&nbsp;&nbsp; 
+                </button>
+            </center>
+        </div>
+    </div>
+
+    <div data-role="page" data-theme="a" id="vendapage">
+        <div data-role="header" data-position="block">
+            <h1 style="font-size: 80%;">
+                Autorização
+            </h1>
+        </div>
+            <div class="ui-field-contain" style='margin: 20px; position: relative'>
+                <label style="color: #00a99d; font-weight: bold;">
+                    Valor: 
+                </label>
+                <center>
+                    <input type="tel" name="valor" id="valor" data-mask="#.##0,00" data-mask-reverse="true" style="text-align: right;" />
+                </center>
+                <label style="color: #00a99d; font-weight: bold;">
+                    Parcelas: 
+                </label>
+                <center>
+                    <input type="number" name="parcelas" id="parcelas" style="text-align: right;" maxlength="2" />
+                    <br/>
+                    <button id="bavancar_venda" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;">
+                        Avançar
+                    </button>
+                    <br/>
+                    <button id="blimpar_venda" style="font-size: 100%;">
+                        Limpar
+                    </button>
+                </center>
+        </div>
+        <div data-role="footer" data-position="fixed" align="center">
+            <button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp;</button>
+        </div>
+    </div>
+
+    <div data-role="page" data-theme="a" id="vendaconcluida">
+        <div data-role="header" data-position="inline">
+        </div>
+            <div class="ui-field-contain">
+                
+             <center>
+               <ul data-role="listview">
+                <li><center>
+                    Número Autorização<br/>
+                    <div id="numaut" style="font-size: 120%;color: #00a99d;font-weight: bold;"></div>
+                </center></li>
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Entidade </div>
+                    <div id="etd" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Associado </div>
+                    <div id="ass" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Portador</div>
+                    <div id="port" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                 <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Cartão</div>
+                    <div id="car" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Parcelas</span>
+                        <span id="par" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Total</span>
+                        <span id="valort" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+                    <li><center>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Primeria Parc. </span>
+                        <span id="parcprim" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Demais </span>
+                        <span id="parcout" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+                    <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Mês Venc. </div>
+                    <div id="mesven" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                    <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Estabelcimento</div>
+                    <div id="ecsnom" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                    <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> CNPJ</div>
+                    <div id="cnpj" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Data </span>
+                        <span id="data" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Hora </span>
+                        <span id="hora" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+              </ul>
+             </center>
+        </div>
+        <div data-role="footer" data-position="fixed">
+                <center><button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
+        </div>
+    </div>
+
+    <div data-role="page" data-theme="a" id="consconcluida">
+        <div data-role="header" data-position="inline">
+        </div>
+            <div class="ui-field-contain">
+                <input type="hidden" id="authidden">
+             <center>
+               <ul data-role="listview">
+                <li><center>
+                    Número Autorização<br/>
+                    <div id="cnumaut" style="font-size: 120%;color: #00a99d;font-weight: bold;"></div>
+                </center></li>
+               
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Situação </div>
+                    <div id="cstatus" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>  
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Entidade </div>
+                    <div id="cetd" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Associado </div>
+                    <div id="cass" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Portador</div>
+                    <div id="cport" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                 <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Cartão</div>
+                    <div id="ccar" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                <li><center>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Parcelas</span>
+                        <span id="cpar" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Total</span>
+                        <span id="cvalort" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+                    <li><center>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Primeria Parc. </span>
+                        <span id="cparcprim" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Demais </span>
+                        <span id="cparcout" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+                    <li><center>
+                    <div style="font-size: 60%;color: #00a99d;font-weight: bold;"> Mês Venc. </div>
+                    <div id="cmesven" style="font-size: 70%;font-weight: bold;"></div></center></li>
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Data </span>
+                        <span id="cdata" style="font-size: 70%;font-weight: bold;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="font-size: 60%;color: #00a99d;font-weight: bold;">Hora </span>
+                        <span id="chora" style="font-size: 70%;font-weight: bold;"></span>
+                    </center></li>
+              </ul>
+             </center>
+        </div>
+        <div data-role="footer" data-position="fixed">
+                <center><button style="font-size: 70%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bestornar_cons"> Estornar </button><button style="font-size: 70%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
+        </div>
+    </div>
+        <script type="text/javascript" src="js/js.js"></script>
+        <script src="js/jquery.mask.js"></script> 
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>
