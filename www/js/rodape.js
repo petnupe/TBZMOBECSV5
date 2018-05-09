@@ -1,1 +1,1 @@
-        document.write('<div data-role="footer" data-position="fixed"><h1 style="font-size:80%;">TecBiz Mobile 3.0.3</h1></div>');
+        document.write('<div data-role="footer" data-position="fixed"><h1 style="font-size:80%;">TecBiz Mobile 3.0</h1></div>');
