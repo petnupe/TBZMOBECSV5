@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget codeVersion="3.0.2" id="com.tecbiz.lojista" version="3.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget codeVersion="3.0.3" id="com.tecbiz.lojista" version="3.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>TecBiz Lojista</name>
     <description>
         Aplicativo destinado a rede conveniada TecBiz para realização de autorizações, estornos e consultas.
