@@ -1,10 +1,69 @@
         $(document).ready(function() {
-            console.log('iniciando o app');
-        });
 
+            $('#btnExtratos').on('click', function() {
+
+                $.mobile.navigate("#extratoPageSelecionaEntidade");
+                var ecs_value = $.localStorage.get('ecs_ls');
+
+                if (ecs_value > 0) {
+                    $.support.cors = true;
+
+                    $.ajax({
+                        url: "http://www2.tecbiz.com.br/tecbiz/tecbiz.php",
+                        data: {
+                            a: "31aaf8",
+                            codecs: ecs_value,
+                            acao: '1'
+                        },
+                        dataType: "json",
+                        type: "GET",
+                        async: true,
+                        cache: false,
+                        context: jQuery('#resultado'),
+                        beforeSend: function() {
+                            $.mobile.loading("show", {
+                                text: "Aguarde...",
+                                textVisible: true,
+                                theme: "a",
+                                html: ""
+                            });
+                        },
+                        success: function(context) {
+                            var options = '<option>&nbsp;&nbsp;</option>';
+                            var EntidadeMesAtual = [];
+
+                            for (var i in context.dados[0].EntidadesVinculadas) {
+                                options += '<option value="' + i + '">' + context.dados[0].EntidadesVinculadas[i] + '</option>';
+                                EntidadeMesAtual[i] = context.dados[1].EntidadesMesAtual[i];
+                            }
+
+                            console.log(EntidadeMesAtual);
+
+                            $('#selectetds').html(options);
+
+                        },
+                        error: function(request, status, error) {
+                            // Volta o botão de submit
+                            $.mobile.loading('hide');
+                            // E alerta o erro
+                            alert('Problema de conexão!');
+                        }
+                    });
+                }
+            });
+
+            $('#selectetds').on('change', function() {
+
+            })
+
+
+        });
 
         // Wait for device API libraries to load
         //
+
+
+
 
 
         function sair() {
@@ -25,7 +84,7 @@
         $(document).on("click", "#vf", function() {
             c = 1;
         });
-        
+
         $(document).on("click", "#bMenu", function() {
 
             document.getElementById('aut').value = '';
@@ -37,9 +96,7 @@
                 $('select').selectmenu('refresh');
                 c = 0;
             }
-
             $.mobile.navigate("#menupage");
-
         });
 
         function onBackKeyDown() {
@@ -66,14 +123,11 @@
         }
 
         $(function() {
-
             $("#bentrar").click(function() {
-
                 var ecs_value = document.getElementById('codecs').value;
                 var sen_value = document.getElementById('senecs').value;
 
                 if (ecs_value.length > 0 && sen_value.length > 0) {
-
                     if (document.getElementById('checkLogin').checked) {
                         $.localStorage.set('ecs_ls', ecs_value);
                         $.localStorage.set('sen_ls', sen_value);
@@ -81,9 +135,6 @@
                     } else {
                         $.localStorage.removeAll();
                     }
-
-
-
                     $.support.cors = true;
                     $.ajax({
                         url: "http://www2.tecbiz.com.br/tecbiz/tecbiz.php",
@@ -114,9 +165,7 @@
                             for (i = 0; i < node.length; i++) {
 
                                 if (context.getElementsByTagName("node")[i].childNodes[0].childNodes[0] !== undefined) {
-
                                     dados[i] = context.getElementsByTagName("node")[i].childNodes[0].childNodes[0].nodeValue;
-
                                 }
 
                             }
@@ -141,13 +190,11 @@
                 } else {
                     alertaCamposVazios();
                 }
-
             });
         });
 
         //Funções Tela Cartão
         $(document).on("click", "#bavancar_cartao", function() {
-
             cartao = document.getElementById('cartao').value;
 
             if (cartao.length == 19) {
@@ -155,14 +202,11 @@
             } else {
                 alertaCartaoIncompleto();
             }
-
         });
 
         $(document).on("click", "#blimpar_cartao", function() {
-
             var cartao = document.getElementById('cartao');
             cartao.value = "6298 69";
-
         });
 
         //Tela Vencimento
@@ -178,7 +222,6 @@
             parcelas.value = "";
         });
 
-
         function venda() {
             var ecs_value = document.getElementById('codecs').value;
             var sen_value = document.getElementById('senecs').value;
@@ -186,6 +229,7 @@
             var parcelas_value = document.getElementById('parcelas').value;
             var cartao_value = document.getElementById('cartao').value;
             var mesven_value = document.getElementById('mes').value;
+
             if (valor_value.length > 0 && parcelas_value.length > 0) {
                 valor_value = valor_value.replace(',', '');
                 valor_value = valor_value.replace('.', '');
@@ -213,9 +257,9 @@
                     cache: false,
                     context: jQuery('#resultado'),
                     beforeSend: function() {
-                        $.mobile.loading("show", {text: "Aguarde...", textVisible: true, theme: "a", html: ""});
+                        $.mobile.loading("show", { text: "Aguarde...", textVisible: true, theme: "a", html: "" });
                     },
-                    
+
                     success: function(context) {
                         var dados = new Array();
                         var node = context.getElementsByTagName("node");
@@ -256,24 +300,16 @@
             } else {
                 alert('erro');
             }
-
         };
-
-
 
         //Tela Consulta
         $(document).on("click", "#blimpar_cons", function() {
-
             var aut = document.getElementById('aut');
             aut.value = "";
-
         });
-
 
         //Funções Tela Venda
         $(document).on("click", "#bavancar_cons", function() {
-
-            console.log('clicando');
             var ecs_value = document.getElementById('codecs').value;
             var sen_value = document.getElementById('senecs').value;
             var aut_value = document.getElementById('aut').value;
@@ -298,7 +334,7 @@
                 cache: false,
                 context: jQuery('#resultado'),
                 beforeSend: function() {
-                    $.mobile.loading("show", {text: "Aguarde...", textVisible: true, theme: "a", html: ""});
+                    $.mobile.loading("show", { text: "Aguarde...", textVisible: true, theme: "a", html: "" });
                 },
                 success: function(context) {
                     // handle result
@@ -309,7 +345,7 @@
                         if (context.getElementsByTagName("node")[i].childNodes[0].childNodes[0] !== undefined) {
                             dados[i] = context.getElementsByTagName("node")[i].childNodes[0].childNodes[0].nodeValue;
                         }
-                   }
+                    }
                     var auth = document.getElementById('authidden');
                     auth.value = dados[0];
 
@@ -402,7 +438,7 @@
                 if (mesven_value == 12) {
                     mesvencimento = 'Dezembro';
                 }
-                navigator.notification.confirm ('CARTÃO: ' + cartao_value + '\n\nVALOR TOTAL: ' + valor_value + '\n\nPARCELAS: X' + parcelas_value + '\n\nVENCIMENTO: ' + mesvencimento, confirmaVenda, 'Confirma a autorização?', ['Não', 'Sim']);
+                navigator.notification.confirm('CARTÃO: ' + cartao_value + '\n\nVALOR TOTAL: ' + valor_value + '\n\nPARCELAS: X' + parcelas_value + '\n\nVENCIMENTO: ' + mesvencimento, confirmaVenda, 'Confirma a autorização?', ['Não', 'Sim']);
             } else {
                 alertaCamposVazios();
             }
