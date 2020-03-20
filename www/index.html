@@ -24,8 +24,8 @@
                 <div data-role="fieldcontain">
                     <center>
                         <label>
-                                    Código
-                                </label>
+                            Código
+                        </label>
                     </center>
                     <input maxlength="4" type="number" name="codecs" id="codecs" data-mask="0000" style="text-align: center" required="on" />
                     <center>
@@ -36,8 +36,8 @@
                     <input type="number" name="senecs" id="senecs" style="text-align: center" data-mask="000000" />
             </center>
             <button class="show-page-loading-msg" data-textonly="false" data-textvisible="true" data-msgtext="Aguarde..." id="bentrar" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;" onclick="controlBackButton();">
-                        Entrar
-                    </button>
+                    Entrar
+            </button>
             <center/>
             <input type="checkbox" name="checkLogin" id="checkLogin" class="custom" />
             <label for="checkLogin">Salvar dados</label>
@@ -380,27 +380,51 @@
                 <h1 style="font-size: 80%;">Extratos</h1>
             </div>
             <div class="ui-field-contain" style='margin: 20px; position: relative'>
-                <label for="codetd" style="color: #00a99d; font-weight: bold; width: 100%;">
-                    Selecione a Entidade: 
-                </label>
                 <center>
-                    <select name="selectetds" id="selectetds">
+                    <label for="codetd" style="color: #00a99d; font-weight: bold; width: 100%;">
+                        Selecione a Entidade: 
+                    </label>
+                    <select name="selectetds" id="selectetds"></select>
 
-
-
-
-                        
-                    </select>
+                    <div class="divSelectMeses">
+                        <label for="selectMeses" style="color: #00a99d; font-weight: bold; width: 100%;">
+                            Selecione o mês:
+                        </label>
+                        <select name="selectMeses" id="selectMeses"></select>
+                    </div>
                 </center>
+                <div class="divSelectMeses">
+                    <button class="show-page-loading-msg" data-textonly="false" data-textvisible="true" data-msgtext="Aguarde..." id="bextrato" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;" onclick="controlBackButton();">
+                        Ver extrato
+                    </button>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <center>
+                    <button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button>
+                </center>
+            </div>
+        </div>
+
+
+        <div data-role="page" data-theme="a" id="extratoPageListaMovimentacao">
+            <div data-role="header" data-position="inline">
+                <h1 style="font-size: 80%;">Extratos</h1>
+            </div>
+            <div class="ui-field-contain" style='margin: 20px; position: relative'>
+                 <label>
+                     Entidade: <span id="nomeEntidadeExtrato"></span> 
+                 </label>
+                <label>
+                    Mês: <span id="mesExtrato"></span> 
+                </label>
             </div>
             <div data-role="footer" data-position="fixed">
                 <center><button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
             </div>
         </div>
-
         <script type="text/javascript" src="js/js.js"></script>
         <script src="js/jquery.mask.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
 </body>
-
 </html>

@@ -1,8 +1,24 @@
         $(document).ready(function() {
 
+            //var meses = [{1 : 'Janeiro', 2 : 'Fevereiro',3 : 'Março',4 : 'Abril',5 : 'Maio',6 : 'Junho',7 : 'Julho',8 : 'Agosto',9 : 'Setembro',10 : 'Outubro',11 : 'Novembro',12 : 'Dezembro'}];
+            var meses = new Array();
+                meses[1] = 'Jan';
+                meses[2] = 'Fev';
+                meses[3] = 'Mar';
+                meses[4] = 'Abr';
+                meses[5] = 'Mai';
+                meses[6] = 'Jun';
+                meses[7] = 'Jul';
+                meses[8] = 'Ago';
+                meses[9] = 'Set';
+                meses[10] = 'Out';
+                meses[11] = 'Nov';
+                meses[12] = 'Dez';
+            
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
+                $('.divSelectMeses').hide();
                 var ecs_value = $.localStorage.get('ecs_ls');
 
                 if (ecs_value > 0) {
@@ -31,14 +47,15 @@
                         success: function(context) {
                             var options = '<option>&nbsp;&nbsp;</option>';
                             var EntidadeMesAtual = [];
-
+                            var EntidadesNomes = [];    
                             for (var i in context.dados[0].EntidadesVinculadas) {
                                 options += '<option value="' + i + '">' + context.dados[0].EntidadesVinculadas[i] + '</option>';
                                 EntidadeMesAtual[i] = context.dados[1].EntidadesMesAtual[i];
+                                EntidadesNomes[i] = context.dados[0].EntidadesVinculadas[i];
                             }
 
-                            console.log(EntidadeMesAtual);
-
+                            $.localStorage.set('EntidadeMesAtual', EntidadeMesAtual);
+                            $.localStorage.set('EntidadesNomes', EntidadesNomes);
                             $('#selectetds').html(options);
 
                         },
@@ -53,10 +70,82 @@
             });
 
             $('#selectetds').on('change', function() {
+                var EtdSelecionada = $('#selectetds option:selected').val();
 
-            })
+                $.localStorage.set('EtdSelecionada', EtdSelecionada);
+                var EtdMesInicial = $.localStorage.get('EntidadeMesAtual');
+                var MesInicial = parseInt(EtdMesInicial[EtdSelecionada].split('/')[0]);
+                var AnoInicial = EtdMesInicial[EtdSelecionada].split('/')[1];
+                var i = 12;
 
+                var selectMeses = '<option value="">---- Mes inicial ----</option>';
 
+                for(i; i >= 1; i--) {
+                    if(MesInicial == 0) {
+                        MesInicial = 12;
+                        AnoInicial--;
+                    }
+
+                    selectMeses += '<option value='+MesInicial+'/'+AnoInicial+'>'+meses[MesInicial]+ ' / ' + AnoInicial+'</option>';
+                    MesInicial--;
+                }
+
+                $('#selectMeses').html(selectMeses);
+
+                if(EtdSelecionada) {
+                    $('.divSelectMeses').show();
+                } else {
+                    $('.divSelectMeses').hide();
+                }
+            });
+
+            $('#bextrato').on('click', function () {
+
+                $.mobile.navigate("#extratoPageListaMovimentacao");
+               
+                var ecs_value = $.localStorage.get('ecs_ls');
+                
+                var NomeEtdSelecionada = $.localStorage.get('EntidadesNomes');
+                
+                $('#nomeEntidadeExtrato').text(NomeEtdSelecionada[$.localStorage.get('EtdSelecionada')]);
+                $('#mesExtrato').text($('#selectMeses option:selected').html());
+                
+                if (ecs_value > 0) {
+                    $.support.cors = true;
+
+                    $.ajax({
+                        url: "http://www2.tecbiz.com.br/tecbiz/tecbiz.php",
+                        data: {
+                            a: "cc12a7",
+                            codecs: ecs_value,
+                            codetd: $.localStorage.get('EtdSelecionada'),
+                            mesven: '01/2020'
+                        },
+                        dataType: "json",
+                        type: "GET",
+                        async: true,
+                        cache: false,
+                        context: jQuery('#resultado'),
+                        beforeSend: function() {
+                            $.mobile.loading("show", {
+                                text: "Aguarde...",
+                                textVisible: true,
+                                theme: "a",
+                                html: ""
+                            });
+                        },
+                        success: function(context) {
+                                console.log(JSON.stringify(context.extrato));
+                        },
+                        error: function(request, status, error) {
+                            // Volta o botão de submit
+                            $.mobile.loading('hide');
+                            // E alerta o erro
+                            alert('Problema de conexão!');
+                        }
+                    });
+                }
+            });
         });
 
         // Wait for device API libraries to load
