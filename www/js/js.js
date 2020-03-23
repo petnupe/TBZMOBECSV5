@@ -18,7 +18,7 @@
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
-                $('.divSelectMeses').hide();
+                //$('.divSelectMeses').hide();
                 var ecs_value = $.localStorage.get('ecs_ls');
 
                 if (ecs_value > 0) {
@@ -45,7 +45,7 @@
                             });
                         },
                         success: function(context) {
-                            var options = '<option>&nbsp;&nbsp;</option>';
+                            var options = '';
                             var EntidadeMesAtual = [];
                             var EntidadesNomes = [];    
                             for (var i in context.dados[0].EntidadesVinculadas) {
@@ -53,7 +53,6 @@
                                 EntidadeMesAtual[i] = context.dados[1].EntidadesMesAtual[i];
                                 EntidadesNomes[i] = context.dados[0].EntidadesVinculadas[i];
                             }
-
                             $.localStorage.set('EntidadeMesAtual', EntidadeMesAtual);
                             $.localStorage.set('EntidadesNomes', EntidadesNomes);
                             $('#selectetds').html(options);
@@ -74,8 +73,10 @@
 
                 $.localStorage.set('EtdSelecionada', EtdSelecionada);
                 var EtdMesInicial = $.localStorage.get('EntidadeMesAtual');
+                                
                 var MesInicial = parseInt(EtdMesInicial[EtdSelecionada].split('/')[0]);
                 var AnoInicial = EtdMesInicial[EtdSelecionada].split('/')[1];
+                
                 var i = 12;
 
                 var selectMeses = '<option value="">---- Mes inicial ----</option>';
@@ -100,16 +101,22 @@
             });
 
             $('#bextrato').on('click', function () {
-
-                $.mobile.navigate("#extratoPageListaMovimentacao");
-               
-                var ecs_value = $.localStorage.get('ecs_ls');
                 
+                var ecs_value = $.localStorage.get('ecs_ls');
                 var NomeEtdSelecionada = $.localStorage.get('EntidadesNomes');
+                var EntidadeSelecionada = $.localStorage.get('EtdSelecionada');
                 
                 $('#nomeEntidadeExtrato').text(NomeEtdSelecionada[$.localStorage.get('EtdSelecionada')]);
+                var mesSelecionado = $('#selectMeses option:selected').val();
                 $('#mesExtrato').text($('#selectMeses option:selected').html());
-                
+
+                if(!EntidadeSelecionada || !mesSelecionado) {
+                    alert('**ANTEÇÃO**\n\nSelecione as opções para geração do extrato!');
+                    return;    
+                }
+
+                $.mobile.navigate("#extratoPageListaMovimentacao");
+
                 if (ecs_value > 0) {
                     $.support.cors = true;
 
