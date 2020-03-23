@@ -143,6 +143,23 @@
                         },
                         success: function(context) {
                                 console.log(JSON.stringify(context.extrato));
+                                    var tabelaExtrato = '<table class="table"><thead><tr><th scope="col">Data</th><th scope="col">Parcela</th><th scope="col">Ass.</th><th scope="col">Vlr. parc.</th></tr></thead>';
+                                    var corpoExtrato = '<tbody>'
+                                for (var i in context.extrato) {
+                                    
+                                    var data = context.extrato[i];
+
+                                    if(data.situacao == '0') {
+                                        corpoExtrato += '<tr scope="row"><td>'+data.data_realizacao_compra.split('/')[0]+'/'+data.data_realizacao_compra.split('/')[1]+'</td>';
+                                        corpoExtrato += '<td>'+data.qtd_parcelas+'/'+data.num_parcela+'</td>';
+                                        corpoExtrato += '<td>'+data.nome_associado+'</td>';
+                                        corpoExtrato += '<td  class="text-right" align="right">'+data.valor_parcela+'</td></tr>';
+                                    }
+                                   
+                                   
+                                }
+                                corpoExtrato += '</tbody></table>'
+                                $('#extratoMovimentacao').html(tabelaExtrato+corpoExtrato);
                         },
                         error: function(request, status, error) {
                             // Volta o botão de submit
