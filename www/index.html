@@ -385,44 +385,35 @@
                         Selecione a Entidade: 
                     </label>
                     <div class="d-flex">
-                    <select name="selectetds" id="selectetds"></select>
-                </div>
-                    <div class="divSelectMeses">
-                        <label for="selectMeses" style="color: #00a99d; font-weight: bold; width: 100%;">
-                            Selecione o mês:
-                        </label>
+                        <select name="selectetds" id="selectetds"></select>
+                    </div>                    <div class="divSelectMeses">
+                    <label for="selectMeses" style="color: #00a99d; font-weight: bold; width: 100%;">
+                        Selecione o mês:
+                    </label>
                         <select name="selectMeses" id="selectMeses"></select>
-                    </div>
+                </div>
                 
                 <div class="divSelectMeses">
-                    <button class="show-page-loading-msg" data-textonly="false" data-textvisible="true" data-msgtext="Aguarde..." id="bextrato" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF;">
+                    <button class="show-page-loading-msg; " data-textonly="false" data-textvisible="true" data-msgtext="Aguarde..." id="bextrato" style="font-size: 100%;background-color: #00a99d;color: #FFFFFF; margin-top: 20px; margin-bottom: 20px;">
                         Ver extrato
                     </button>
+                    <hr />
+                </div>
+
+                <div id="cabecalhoExtrato" style="display:flex; justify-content: space-between;">
+                    <label>
+                        Entidade: <span id="nomeEntidadeExtrato"></span> 
+                    </label>
+                    <label>
+                        Mês: <span id="mesExtrato"></span> 
+                    </label>
                 </div>
             </div>
+            <div id="extratoMovimentacao" style="padding: 0px 25px 25px 25px;"></div>
             <div data-role="footer" data-position="fixed">
                 <center>
                     <button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button>
                 </center>
-            </div>
-        </div>
-
-
-        <div data-role="page" data-theme="a" id="extratoPageListaMovimentacao">
-            <div data-role="header" data-position="inline">
-                <h1 style="font-size: 80%;">Extratos</h1>
-            </div>
-            <div class="ui-field-contain" style='margin: 20px; position: relative'>
-                 <label>
-                     Entidade: <span id="nomeEntidadeExtrato"></span> 
-                 </label>
-                <label>
-                    Mês: <span id="mesExtrato"></span> 
-                </label>
-            </div>
-            <div id="extratoMovimentacao"></div>
-            <div data-role="footer" data-position="fixed">
-                <center><button style="font-size: 80%;font-weight: bold;padding-left: 20%;padding-right: 20%;" id="bMenu"> &nbsp;&nbsp;Menu&nbsp;&nbsp; </button></center>
             </div>
         </div>
         <script type="text/javascript" src="js/js.js"></script>

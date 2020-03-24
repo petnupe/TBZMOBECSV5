@@ -2,24 +2,25 @@
 
             //var meses = [{1 : 'Janeiro', 2 : 'Fevereiro',3 : 'Março',4 : 'Abril',5 : 'Maio',6 : 'Junho',7 : 'Julho',8 : 'Agosto',9 : 'Setembro',10 : 'Outubro',11 : 'Novembro',12 : 'Dezembro'}];
             var meses = new Array();
-                meses[1] = 'Jan';
-                meses[2] = 'Fev';
-                meses[3] = 'Mar';
-                meses[4] = 'Abr';
-                meses[5] = 'Mai';
-                meses[6] = 'Jun';
-                meses[7] = 'Jul';
-                meses[8] = 'Ago';
-                meses[9] = 'Set';
-                meses[10] = 'Out';
-                meses[11] = 'Nov';
-                meses[12] = 'Dez';
+                meses[1] = 'Janeiro';
+                meses[2] = 'Fevereiro';
+                meses[3] = 'Março';
+                meses[4] = 'Abril';
+                meses[5] = 'Maio';
+                meses[6] = 'Junho';
+                meses[7] = 'Julho';
+                meses[8] = 'Agosto';
+                meses[9] = 'Setembro';
+                meses[10] = 'Outubro';
+                meses[11] = 'Novembro';
+                meses[12] = 'Dezembro';
             
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
                 //$('.divSelectMeses').hide();
                 var ecs_value = $.localStorage.get('ecs_ls');
+                $('#cabecalhoExtrato').hide();
 
                 if (ecs_value > 0) {
                     $.support.cors = true;
@@ -87,7 +88,7 @@
                         AnoInicial--;
                     }
 
-                    selectMeses += '<option value='+MesInicial+'/'+AnoInicial+'>'+meses[MesInicial]+ ' / ' + AnoInicial+'</option>';
+                    selectMeses += '<option value='+MesInicial+'/'+AnoInicial+'>'+meses[MesInicial]+ '/' + AnoInicial+'</option>';
                     MesInicial--;
                 }
 
@@ -115,7 +116,7 @@
                     return;    
                 }
 
-                $.mobile.navigate("#extratoPageListaMovimentacao");
+                //$.mobile.navigate("#extratoPageListaMovimentacao");
 
                 if (ecs_value > 0) {
                     $.support.cors = true;
@@ -126,7 +127,7 @@
                             a: "cc12a7",
                             codecs: ecs_value,
                             codetd: $.localStorage.get('EtdSelecionada'),
-                            mesven: '01/2020'
+                            mesven: mesSelecionado
                         },
                         dataType: "json",
                         type: "GET",
@@ -142,24 +143,46 @@
                             });
                         },
                         success: function(context) {
-                                console.log(JSON.stringify(context.extrato));
-                                    var tabelaExtrato = '<table class="table"><thead><tr><th scope="col">Data</th><th scope="col">Parcela</th><th scope="col">Ass.</th><th scope="col">Vlr. parc.</th></tr></thead>';
-                                    var corpoExtrato = '<tbody>'
-                                for (var i in context.extrato) {
-                                    
-                                    var data = context.extrato[i];
-
-                                    if(data.situacao == '0') {
-                                        corpoExtrato += '<tr scope="row"><td>'+data.data_realizacao_compra.split('/')[0]+'/'+data.data_realizacao_compra.split('/')[1]+'</td>';
-                                        corpoExtrato += '<td>'+data.qtd_parcelas+'/'+data.num_parcela+'</td>';
-                                        corpoExtrato += '<td>'+data.nome_associado+'</td>';
-                                        corpoExtrato += '<td  class="text-right" align="right">'+data.valor_parcela+'</td></tr>';
-                                    }
-                                   
-                                   
+                            var totalConsumo  = 0.00;
+                            var tabelaExtrato = '<hr /><table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 10px; font-weight:bold;">Extrato de vendas:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left">Parcela</th><th scope="col" align="left">Associado.</th><th scope="col" class="text-right" align="right">Valor parc(R$)</th></tr></thead>';
+                            var corpoExtrato  = '<tbody>';
+                            var totalGeral    = 0.00;
+                            for (var i in context.extrato) {
+                                var data = context.extrato[i];
+                                if(data.situacao == '0') {
+                                    corpoExtrato += '<tr scope="row"><td>'+data.data_realizacao_compra.split('/')[0]+'/'+data.data_realizacao_compra.split('/')[1]+'</td>';
+                                    corpoExtrato += '<td>'+data.qtd_parcelas+'/'+data.num_parcela+'</td>';
+                                    corpoExtrato += '<td>'+data.nome_associado+'</td>';
+                                    corpoExtrato += '<td class="text-right" align="right">'+parseFloat(data.valor_parcela).toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</span></td></tr>';
+                                    totalConsumo += parseFloat(data.valor_parcela);
                                 }
-                                corpoExtrato += '</tbody></table>'
-                                $('#extratoMovimentacao').html(tabelaExtrato+corpoExtrato);
+                            }
+
+                            totalGeral += totalConsumo;
+                            
+                            $('#cabecalhoExtrato').show();
+                            var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >'+totalConsumo+'</td></tr></tbody></table>';
+
+                            var totalLancamento = 0.00;
+                            var tabelaLancamento = '<hr /><table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 10px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descricao</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
+                            var corpoLancamento = '<tbody>'
+                            
+                            for (var x  in context.lancamento) {
+                                var data = context.lancamento[x];
+                                corpoLancamento += '<tr scope="row"><td>'+data.data_lancamento.split('/')[0]+'/'+data.data_lancamento.split('/')[1]+'</td>';    
+                                corpoLancamento += '<td colspan="2">'+data.descricao+'</td>';    
+                                corpoLancamento += '<td align="right">'+parseFloat(data.valor).toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</span></td>';
+                                totalLancamento += parseFloat(data.valor);
+                            }
+
+                            totalGeral += totalLancamento;
+
+                            var rodapeLancamento = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:      </td><td align="right" >'+totalLancamento.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</td></tr>';
+                            
+                            var rodapeFinal      = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total geral:</td><td align="right" id="totalGeral">'+totalGeral.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+     '</td></tr></tbody></table>';
+                            //.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});
+                            $('#extratoMovimentacao').html(tabelaExtrato+corpoExtrato+rodapeConsumo+tabelaLancamento+corpoLancamento+rodapeLancamento+rodapeFinal+'</tbody></table>');
+                            $.mobile.loading('hide');
                         },
                         error: function(request, status, error) {
                             // Volta o botão de submit
