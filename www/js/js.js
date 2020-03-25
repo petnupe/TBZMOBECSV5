@@ -46,7 +46,7 @@
                             });
                         },
                         success: function(context) {
-                            var options = '';
+                            var options = '<option></option>';
                             var EntidadeMesAtual = [];
                             var EntidadesNomes = [];    
                             for (var i in context.dados[0].EntidadesVinculadas) {
@@ -69,9 +69,9 @@
                 }
             });
 
-            $('#selectetds').on('change', function() {
+            $('#selectetds').change(function() {
+                $('#selectMeses-button span').html('&nbsp');
                 var EtdSelecionada = $('#selectetds option:selected').val();
-
                 $.localStorage.set('EtdSelecionada', EtdSelecionada);
                 var EtdMesInicial = $.localStorage.get('EntidadeMesAtual');
                                 
@@ -79,8 +79,7 @@
                 var AnoInicial = EtdMesInicial[EtdSelecionada].split('/')[1];
                 
                 var i = 12;
-
-                var selectMeses = '<option value="">---- Mes inicial ----</option>';
+                var selectMeses = '<option value="" selected="selected">---- Mes inicial ----</option>';
 
                 for(i; i >= 1; i--) {
                     if(MesInicial == 0) {
@@ -91,7 +90,7 @@
                     selectMeses += '<option value='+MesInicial+'/'+AnoInicial+'>'+meses[MesInicial]+ '/' + AnoInicial+'</option>';
                     MesInicial--;
                 }
-
+                
                 $('#selectMeses').html(selectMeses);
 
                 if(EtdSelecionada) {
@@ -115,8 +114,6 @@
                     alert('**ANTEÇÃO**\n\nSelecione as opções para geração do extrato!');
                     return;    
                 }
-
-                //$.mobile.navigate("#extratoPageListaMovimentacao");
 
                 if (ecs_value > 0) {
                     $.support.cors = true;
@@ -144,7 +141,7 @@
                         },
                         success: function(context) {
                             var totalConsumo  = 0.00;
-                            var tabelaExtrato = '<hr /><table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Extrato de vendas:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left">Parcela</th><th scope="col" align="left">Associado.</th><th scope="col" class="text-right" align="right">Valor parc(R$)</th></tr></thead>';
+                            var tabelaExtrato = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 0px; font-weight:bold;">Extrato de vendas:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left">Parcela</th><th scope="col" align="left">Associado.</th><th scope="col" class="text-right" align="right">Valor parc(R$)</th></tr></thead>';
                             var corpoExtrato  = '<tbody>';
                             var totalGeral    = 0.00;
                             for (var i in context.extrato) {
@@ -157,11 +154,11 @@
                                     totalConsumo += parseFloat(data.valor_parcela);
                                 }
                             }
-
+                            totalConsumoCabecalho = totalConsumo.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});
                             totalGeral += totalConsumo;
                             
                             $('#cabecalhoExtrato').show();
-                            var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >'+totalConsumo+'</td></tr></tbody></table>';
+                            var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >'+totalConsumoCabecalho+'</td></tr></tbody></table>';
 
                             var totalLancamento = 0.00;
                             var tabelaLancamento = '<hr /><table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descricao</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
@@ -176,11 +173,8 @@
                             }
 
                             totalGeral += totalLancamento;
-
                             var rodapeLancamento = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:      </td><td align="right" >'+totalLancamento.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</td></tr>';
-                            
                             var rodapeFinal      = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total geral:</td><td align="right" id="totalGeral">'+totalGeral.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+     '</td></tr></tbody></table>';
-                            //.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});
                             $('#extratoMovimentacao').html(tabelaExtrato+corpoExtrato+rodapeConsumo+tabelaLancamento+corpoLancamento+rodapeLancamento+rodapeFinal+'</tbody></table>');
                             $.mobile.loading('hide');
                         },
@@ -195,13 +189,6 @@
             });
         });
 
-        // Wait for device API libraries to load
-        //
-
-
-
-
-
         function sair() {
             navigator.app.exitApp();
         }
@@ -210,8 +197,6 @@
             document.addEventListener("deviceready", onDeviceReady, false);
         }
 
-        // device APIs are available
-        //
         function onDeviceReady() {
             document.addEventListener("backbutton", onBackKeyDown, false);
         }
