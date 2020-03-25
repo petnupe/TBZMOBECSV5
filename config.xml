@@ -9,7 +9,7 @@
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name="phonegap-version" value="cli-9.0.0" />
     <icon src="www/res/icon/android/Icon-App-76x76@1x.png" />
     <platform name="android">
         <icon height="20"   platform="android" src="www/res/icon/android/icon-60.png" width="20" />
