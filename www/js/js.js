@@ -108,12 +108,13 @@
                 
                 $('#nomeEntidadeExtrato').text(NomeEtdSelecionada[$.localStorage.get('EtdSelecionada')]);
                 var mesSelecionado = $('#selectMeses option:selected').val();
-                $('#mesExtrato').text($('#selectMeses option:selected').html());
 
                 if(!EntidadeSelecionada || !mesSelecionado) {
-                    alert('**ANTEÇÃO**\n\nSelecione as opções para geração do extrato!');
+                    alert('**ATENÇÃO**\n\nSelecione as opções para geração do extrato!');
                     return;    
                 }
+
+                $('#mesExtrato').text($('#selectMeses option:selected').html());
 
                 if (ecs_value > 0) {
                     $.support.cors = true;
