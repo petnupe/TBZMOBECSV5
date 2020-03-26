@@ -50,7 +50,7 @@
                             var EntidadeMesAtual = [];
                             var EntidadesNomes = [];    
                             for (var i in context.dados[0].EntidadesVinculadas) {
-                                options += '<option value="' + i + '">' + context.dados[0].EntidadesVinculadas[i] + '</option>';
+                                options += '<option value="' + i + '">' + context.dados[0].EntidadesVinculadas[i].substring(0, 40) + '</option>';
                                 EntidadeMesAtual[i] = context.dados[1].EntidadesMesAtual[i];
                                 EntidadesNomes[i] = context.dados[0].EntidadesVinculadas[i];
                             }
