@@ -162,7 +162,7 @@
                             var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >'+totalConsumoCabecalho+'</td></tr></tbody></table>';
 
                             var totalLancamento = 0.00;
-                            var tabelaLancamento = '<hr /><table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descricao</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
+                            var tabelaLancamento = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4"><hr /></td></tr><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descricao</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
                             var corpoLancamento = '<tbody>'
                             
                             for (var x  in context.lancamento) {
