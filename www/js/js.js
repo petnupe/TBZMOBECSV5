@@ -22,6 +22,8 @@
                 var ecs_value = $.localStorage.get('ecs_ls');
                 $('#cabecalhoExtrato').hide();
 
+alert(ecs_value);
+
                 if (ecs_value > 0) {
                     $.support.cors = true;
 
