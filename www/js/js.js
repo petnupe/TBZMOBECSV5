@@ -18,11 +18,12 @@
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
-                //$('.divSelectMeses').hide();
                 var ecs_value = $.localStorage.get('ecs_ls');
                 $('#cabecalhoExtrato').hide();
 
                 if (ecs_value > 0) {
+
+                    alert('certinho');
                     $.support.cors = true;
 
                     $.ajax({
@@ -66,6 +67,8 @@
                             alert('Problema de conexão!');
                         }
                     });
+                } else {
+                    alert('piroka!');
                 }
             });
 
