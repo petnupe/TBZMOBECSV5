@@ -24,8 +24,6 @@
 alert(ecs_value + ' <---- ');
 
                 if (ecs_value > 0) {
-
-                    alert('certinho');
                     $.support.cors = true;
 
                     $.ajax({
