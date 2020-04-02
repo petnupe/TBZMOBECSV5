@@ -70,7 +70,7 @@ alert(ecs_value + ' <---- ');
                         }
                     });
                 } else {
-                    alert('piroka!');
+                    alert('não pegou codigo!');
                 }
             });
 
