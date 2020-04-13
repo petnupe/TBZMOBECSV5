@@ -104,7 +104,7 @@
 
             $('#bextrato').on('click', function () {
                 
-                var ecs_value = $.localStorage.get('ecs_ls');
+                var ecs_value = $.localStorage.get('ecs_ls') ? $.localStorage.get('ecs_ls') : $.localStorage.get('ecs_ls2');
                 var NomeEtdSelecionada = $.localStorage.get('EntidadesNomes');
                 var EntidadeSelecionada = $.localStorage.get('EtdSelecionada');
                 
