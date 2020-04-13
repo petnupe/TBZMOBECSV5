@@ -18,10 +18,9 @@
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
-                var ecs_value = $.localStorage.get('ecs_ls');
-                $('#cabecalhoExtrato').hide();
+                var ecs_value = $.localStorage.get('ecs_ls') ? $.localStorage.get('ecs_ls') : $.localStorage.get('ecs_ls2');
 
-alert(ecs_value + ' <---- ');
+                $('#cabecalhoExtrato').hide();
 
                 if (ecs_value > 0) {
                     $.support.cors = true;
@@ -259,6 +258,7 @@ alert(ecs_value + ' <---- ');
                         $.localStorage.set('check_ls', 1);
                     } else {
                         $.localStorage.removeAll();
+                        $.localStorage.set('ecs_ls2', ecs_value);
                     }
                     $.support.cors = true;
                     $.ajax({
