@@ -2,19 +2,19 @@
 
             //var meses = [{1 : 'Janeiro', 2 : 'Fevereiro',3 : 'Março',4 : 'Abril',5 : 'Maio',6 : 'Junho',7 : 'Julho',8 : 'Agosto',9 : 'Setembro',10 : 'Outubro',11 : 'Novembro',12 : 'Dezembro'}];
             var meses = new Array();
-                meses[1] = 'Janeiro';
-                meses[2] = 'Fevereiro';
-                meses[3] = 'Março';
-                meses[4] = 'Abril';
-                meses[5] = 'Maio';
-                meses[6] = 'Junho';
-                meses[7] = 'Julho';
-                meses[8] = 'Agosto';
-                meses[9] = 'Setembro';
-                meses[10] = 'Outubro';
-                meses[11] = 'Novembro';
-                meses[12] = 'Dezembro';
-            
+            meses[1] = 'Janeiro';
+            meses[2] = 'Fevereiro';
+            meses[3] = 'Março';
+            meses[4] = 'Abril';
+            meses[5] = 'Maio';
+            meses[6] = 'Junho';
+            meses[7] = 'Julho';
+            meses[8] = 'Agosto';
+            meses[9] = 'Setembro';
+            meses[10] = 'Outubro';
+            meses[11] = 'Novembro';
+            meses[12] = 'Dezembro';
+
             $('#btnExtratos').on('click', function() {
 
                 $.mobile.navigate("#extratoPageSelecionaEntidade");
@@ -48,7 +48,7 @@
                         success: function(context) {
                             var options = '<option></option>';
                             var EntidadeMesAtual = [];
-                            var EntidadesNomes = [];    
+                            var EntidadesNomes = [];
                             for (var i in context.dados[0].EntidadesVinculadas) {
                                 options += '<option value="' + i + '">' + context.dados[0].EntidadesVinculadas[i].substring(0, 40) + '</option>';
                                 EntidadeMesAtual[i] = context.dados[1].EntidadesMesAtual[i];
@@ -76,44 +76,44 @@
                 var EtdSelecionada = $('#selectetds option:selected').val();
                 $.localStorage.set('EtdSelecionada', EtdSelecionada);
                 var EtdMesInicial = $.localStorage.get('EntidadeMesAtual');
-                                
+
                 var MesInicial = parseInt(EtdMesInicial[EtdSelecionada].split('/')[0]);
                 var AnoInicial = EtdMesInicial[EtdSelecionada].split('/')[1];
-                
+
                 var i = 12;
                 var selectMeses = '<option value="" selected="selected">---- Mes inicial ----</option>';
 
-                for(i; i >= 1; i--) {
-                    if(MesInicial == 0) {
+                for (i; i >= 1; i--) {
+                    if (MesInicial == 0) {
                         MesInicial = 12;
                         AnoInicial--;
                     }
 
-                    selectMeses += '<option value='+MesInicial+'/'+AnoInicial+'>'+meses[MesInicial]+ '/' + AnoInicial+'</option>';
+                    selectMeses += '<option value=' + MesInicial + '/' + AnoInicial + '>' + meses[MesInicial] + '/' + AnoInicial + '</option>';
                     MesInicial--;
                 }
-                
+
                 $('#selectMeses').html(selectMeses);
 
-                if(EtdSelecionada) {
+                if (EtdSelecionada) {
                     $('.divSelectMeses').show();
                 } else {
                     $('.divSelectMeses').hide();
                 }
             });
 
-            $('#bextrato').on('click', function () {
-                
+            $('#bextrato').on('click', function() {
+
                 var ecs_value = $.localStorage.get('ecs_ls') ? $.localStorage.get('ecs_ls') : $.localStorage.get('ecs_ls2');
                 var NomeEtdSelecionada = $.localStorage.get('EntidadesNomes');
                 var EntidadeSelecionada = $.localStorage.get('EtdSelecionada');
-                
+
                 $('#nomeEntidadeExtrato').text(NomeEtdSelecionada[$.localStorage.get('EtdSelecionada')]);
                 var mesSelecionado = $('#selectMeses option:selected').val();
 
-                if(!EntidadeSelecionada || !mesSelecionado) {
+                if (!EntidadeSelecionada || !mesSelecionado) {
                     alert('**ATENÇÃO**\n\nSelecione as opções para geração do extrato!');
-                    return;    
+                    return;
                 }
 
                 $('#mesExtrato').text($('#selectMeses option:selected').html());
@@ -143,42 +143,42 @@
                             });
                         },
                         success: function(context) {
-                            var totalConsumo  = 0.00;
-                            var tabelaExtrato = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 0px; font-weight:bold;">Extrato de vendas:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left">Parcela</th><th scope="col" align="left">Associado.</th><th scope="col" class="text-right" align="right">Valor parc(R$)</th></tr></thead>';
-                            var corpoExtrato  = '<tbody>';
-                            var totalGeral    = 0.00;
+                            var totalConsumo = 0.00;
+                            var tabelaExtrato = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4" align="center" style="padding: 0px; font-weight:bold;">Extrato de vendas:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left">Parcela</th><th scope="col" align="left">Associado</th><th scope="col" class="text-right" align="right">Valor parc(R$)</th></tr></thead>';
+                            var corpoExtrato = '<tbody>';
+                            var totalGeral = 0.00;
                             for (var i in context.extrato) {
                                 var data = context.extrato[i];
-                                if(data.situacao == '0') {
-                                    corpoExtrato += '<tr scope="row"><td>'+data.data_realizacao_compra.split('/')[0]+'/'+data.data_realizacao_compra.split('/')[1]+'</td>';
-                                    corpoExtrato += '<td>'+data.qtd_parcelas+'/'+data.num_parcela+'</td>';
-                                    corpoExtrato += '<td>'+data.nome_associado+'</td>';
-                                    corpoExtrato += '<td class="text-right" align="right">'+parseFloat(data.valor_parcela).toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</span></td></tr>';
+                                if (data.situacao == '0') {
+                                    corpoExtrato += '<tr scope="row"><td>' + data.data_realizacao_compra.split('/')[0] + '/' + data.data_realizacao_compra.split('/')[1] + '</td>';
+                                    corpoExtrato += '<td>' + data.qtd_parcelas + '/' + data.num_parcela + '</td>';
+                                    corpoExtrato += '<td>' + data.nome_associado + '</td>';
+                                    corpoExtrato += '<td class="text-right" align="right">' + parseFloat(data.valor_parcela).toLocaleString("pt-BR", { minimumFractionDigits: "2", currency: "BRL" }); + '</span></td></tr>';
                                     totalConsumo += parseFloat(data.valor_parcela);
                                 }
                             }
-                            totalConsumoCabecalho = totalConsumo.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});
+                            totalConsumoCabecalho = totalConsumo.toLocaleString("pt-BR", { minimumFractionDigits: "2", currency: "BRL" });
                             totalGeral += totalConsumo;
-                            
+
                             $('#cabecalhoExtrato').show();
-                            var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >'+totalConsumoCabecalho+'</td></tr></tbody></table>';
+                            var rodapeConsumo = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:</td><td align="right" >' + totalConsumoCabecalho + '</td></tr></tbody></table>';
 
                             var totalLancamento = 0.00;
-                            var tabelaLancamento = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4"><hr /></td></tr><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descricao</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
+                            var tabelaLancamento = '<table class="table table-striped" width="100%"><thead><tr><td colspan="4"><hr /></td></tr><tr><td colspan="4" align="center" style="padding: 3px; font-weight:bold;">Outros lançamentos:</td></tr><tr><th scope="col" align="left">Data</th><th scope="col" align="left" colspan="2">Descrição</th><th scope="col" class="text-right" align="right">Valor</th></tr></thead>';
                             var corpoLancamento = '<tbody>'
-                            
-                            for (var x  in context.lancamento) {
+
+                            for (var x in context.lancamento) {
                                 var data = context.lancamento[x];
-                                corpoLancamento += '<tr scope="row"><td>'+data.data_lancamento.split('/')[0]+'/'+data.data_lancamento.split('/')[1]+'</td>';    
-                                corpoLancamento += '<td colspan="2">'+data.descricao+'</td>';    
-                                corpoLancamento += '<td align="right">'+parseFloat(data.valor).toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</span></td>';
+                                corpoLancamento += '<tr scope="row"><td>' + data.data_lancamento.split('/')[0] + '/' + data.data_lancamento.split('/')[1] + '</td>';
+                                corpoLancamento += '<td colspan="2">' + data.descricao + '</td>';
+                                corpoLancamento += '<td align="right">' + parseFloat(data.valor).toLocaleString("pt-BR", { minimumFractionDigits: "2", currency: "BRL" }); + '</span></td>';
                                 totalLancamento += parseFloat(data.valor);
                             }
 
                             totalGeral += totalLancamento;
-                            var rodapeLancamento = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:      </td><td align="right" >'+totalLancamento.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+'</td></tr>';
-                            var rodapeFinal      = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total geral:</td><td align="right" id="totalGeral">'+totalGeral.toLocaleString("pt-BR", { minimumFractionDigits: "2" , currency:"BRL"});+     '</td></tr></tbody></table>';
-                            $('#extratoMovimentacao').html(tabelaExtrato+corpoExtrato+rodapeConsumo+tabelaLancamento+corpoLancamento+rodapeLancamento+rodapeFinal+'</tbody></table>');
+                            var rodapeLancamento = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total:      </td><td align="right" >' + totalLancamento.toLocaleString("pt-BR", { minimumFractionDigits: "2", currency: "BRL" }); + '</td></tr>';
+                            var rodapeFinal = '<tr><td colspan="4"><hr /></td></tr><tr style="font-weight:bold;"><td colspan="3" align="right">Total geral:</td><td align="right" id="totalGeral">' + totalGeral.toLocaleString("pt-BR", { minimumFractionDigits: "2", currency: "BRL" }); + '</td></tr></tbody></table>';
+                            $('#extratoMovimentacao').html(tabelaExtrato + corpoExtrato + rodapeConsumo + tabelaLancamento + corpoLancamento + rodapeLancamento + rodapeFinal + '</tbody></table>');
                             $.mobile.loading('hide');
                         },
                         error: function(request, status, error) {
