@@ -40,9 +40,7 @@
             </button>
             <center/>
             <input type="checkbox" name="checkLogin" id="checkLogin" class="custom" />
-            <label for="checkLogin">Salvar dados</label>
-            <br /><br />
-            <a href="#" onclick="alert(cordova.plugins.printer.getPrintableTypes(callback));">Impressao</a>
+            <label for="checkLogin" onclick="cordova.plugins.printer.print('<h1>Hello World!</h1>');">Salvar dados</label>
             </center>
             </div>
             <script type="text/javascript" src="js/rodape.js"></script>
